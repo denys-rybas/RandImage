@@ -16,7 +16,6 @@
 		F4E75C6D296D515C00B33DA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E75C6C296D515C00B33DA5 /* AppDelegate.swift */; };
 		F4E75C6F296D515C00B33DA5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E75C6E296D515C00B33DA5 /* SceneDelegate.swift */; };
 		F4E75C71296D515C00B33DA5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E75C70296D515C00B33DA5 /* HomeViewController.swift */; };
-		F4E75C74296D515C00B33DA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4E75C72296D515C00B33DA5 /* Main.storyboard */; };
 		F4E75C76296D515C00B33DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4E75C75296D515C00B33DA5 /* Assets.xcassets */; };
 		F4E75C79296D515C00B33DA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4E75C77296D515C00B33DA5 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -32,7 +31,6 @@
 		F4E75C6C296D515C00B33DA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4E75C6E296D515C00B33DA5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F4E75C70296D515C00B33DA5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		F4E75C73296D515C00B33DA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4E75C75296D515C00B33DA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4E75C78296D515C00B33DA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4E75C7A296D515C00B33DA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				F4E75C6C296D515C00B33DA5 /* AppDelegate.swift */,
+				F4E75C6E296D515C00B33DA5 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -108,8 +107,6 @@
 				F425922C2974E79A0024DBEA /* History */,
 				F425922B2974E78E0024DBEA /* Home */,
 				F42C2F4D29745EFD0061CC92 /* NavigationControllers */,
-				F4E75C6E296D515C00B33DA5 /* SceneDelegate.swift */,
-				F4E75C72296D515C00B33DA5 /* Main.storyboard */,
 				F4E75C75296D515C00B33DA5 /* Assets.xcassets */,
 				F4E75C77296D515C00B33DA5 /* LaunchScreen.storyboard */,
 				F4E75C7A296D515C00B33DA5 /* Info.plist */,
@@ -177,7 +174,6 @@
 			files = (
 				F4E75C79296D515C00B33DA5 /* LaunchScreen.storyboard in Resources */,
 				F4E75C76296D515C00B33DA5 /* Assets.xcassets in Resources */,
-				F4E75C74296D515C00B33DA5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,14 +199,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F4E75C72296D515C00B33DA5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4E75C73296D515C00B33DA5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F4E75C77296D515C00B33DA5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -349,7 +337,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow me to save random photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
@@ -379,7 +366,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow me to save random photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;

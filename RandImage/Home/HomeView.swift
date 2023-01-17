@@ -6,10 +6,18 @@
 //
 
 import UIKit
+import CoreImage.CIFilterBuiltins
+
+protocol HomeViewDelegate: AnyObject {
+    func didUpdateFullScreenImageState(isHidden: Bool)
+    func didTapNextButton()
+    func didTapImage(image: UIImage)
+    func didTapSaveImage(image: UIImage)
+}
 
 class HomeView: UIView {
     // Trying split responsibilities between view and controller
-    var controller: HomeViewController!
+    weak var delegate: HomeViewDelegate?
     
     // MARK: - View elements
     var backgroundImageView = UIImageView()
@@ -33,14 +41,14 @@ class HomeView: UIView {
         setupNextImageButton()
         setupSaveButton()
         
-       pinElementsToLayout()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    private func pinElementsToLayout() {
+    private func setupLayout() {
         backgroundImageView.frame = self.frame
         nextImageButton.frame = CGRect(
             x: 30,
@@ -144,11 +152,10 @@ class HomeView: UIView {
         self.backgroundImageView.image = UIImage(ciImage: output!)
     }
     
-    func setFullScreenImage(sender: UITapGestureRecognizer) {
+    func showFullScreenImage(_ image: UIImage) {
         let fullImageView = UIImageView()
-        let originalView = sender.view as! UIImageView
         
-        fullImageView.image = originalView.image
+        fullImageView.image = image
         fullImageView.frame = UIScreen.main.bounds
         fullImageView.backgroundColor = .black
         fullImageView.contentMode = .scaleAspectFit
@@ -161,26 +168,27 @@ class HomeView: UIView {
         fullImageView.addGestureRecognizer(tap)
         fullImageView.isUserInteractionEnabled = true
         
-        controller.toggleNavigationBarVisibility(hidden: true)
+        delegate?.didUpdateFullScreenImageState(isHidden: true)
         
         addSubview(fullImageView)
     }
     
     @objc func exitFromFullScreenImage(_ sender: UITapGestureRecognizer) -> Void {
-        controller.toggleNavigationBarVisibility(hidden: false)
+        delegate?.didUpdateFullScreenImageState(isHidden: false)
         sender.view?.removeFromSuperview()
     }
     
     // MARK: - Handlers
-    @objc func didTapImage(sender: UITapGestureRecognizer) {
-        self.controller.processFullScreenImage(sender)
+    @objc private func didTapImage() {
+        guard let image = imageView.image else { return }
+        delegate?.didTapImage(image: image)
     }
     
     @objc func didTapNextButton() {
-        self.controller.loadRandomImage()
+        delegate?.didTapNextButton()
     }
     
     @objc func didTapSaveImage() {
-        controller.saveImage(image: imageView.image!)
+        delegate?.didTapSaveImage(image: imageView.image!)
     }
 }

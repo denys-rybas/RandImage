@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import CoreImage.CIFilterBuiltins
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, HomeViewDelegate {
+    let homeView: HomeView = HomeView(frame: UIScreen.main.bounds)
     
     override func loadView() {
-//         super.loadView()
-        let homeView: HomeView = HomeView(frame: UIScreen.main.bounds)
-        homeView.controller = self
+        homeView.delegate = self
         self.view = homeView
     }
     
@@ -22,14 +20,13 @@ class HomeViewController: UIViewController {
         
         title = "Random Photo"
         
-        loadRandomImage()
+        didTapNextButton()
         
-        // TODO: - move all to view
-        // TODO: - check MVP (p - presenter)
         // TODO: - check autolayout
         // TODO: - check UIStackView
         // TODO: - Codable
         // TODO: - UserDefaults.standard.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
+        // in debug mode we can use "po" (print object) in console
     }
     
     override func viewDidLayoutSubviews() {
@@ -37,32 +34,29 @@ class HomeViewController: UIViewController {
         // view.safeAreaInsets are not available in viewDidLoad
     }
     
-    // Because I can't override self.view to return HomeView
-    private func getView() -> HomeView {
-        return view as! HomeView
+    func didUpdateFullScreenImageState(isHidden: Bool) {
+        navigationController?.setNavigationBarHidden(isHidden, animated: false)
     }
     
-    func toggleNavigationBarVisibility(hidden: Bool) {
-        navigationController?.setNavigationBarHidden(hidden, animated: false)
-    }
-    
-    func loadRandomImage() {
+    func didTapNextButton() {
         // Start loader
-        getView().setStateOfNextImageButton(imageLoaded: false)
+        homeView.setStateOfNextImageButton(imageLoaded: false)
 
         let urlString = "https://source.unsplash.com/random/1200x800"
         let url = URL(string: urlString)!
                         
         let task: URLSessionDataTask = URLSession.shared
-            .dataTask(with: url) { data, response, error in
+            .dataTask(with: url) { [weak self] data, response, error in
+                guard let self = self else { return }
+                
                 if let data = data {
                     // UI code should be in the main thread
                     DispatchQueue.main.async {
                         let image = UIImage(data: data)
-                        self.getView().setRandomImage(image!)
-                        self.getView().setBackgroundImage(image!, blurRadius: 5.0)
+                        self.homeView.setRandomImage(image!)
+                        self.homeView.setBackgroundImage(image!, blurRadius: 5.0)
                         // Stop loader on button
-                        self.getView().setStateOfNextImageButton(imageLoaded: true)
+                        self.homeView.setStateOfNextImageButton(imageLoaded: true)
                     }
                 } else if let error = error {
                     print(error)
@@ -71,11 +65,11 @@ class HomeViewController: UIViewController {
         task.resume()
     }
     
-    func processFullScreenImage(_ sender: UITapGestureRecognizer) {
-        getView().setFullScreenImage(sender: sender)
+    func didTapImage(image: UIImage) {
+        homeView.showFullScreenImage(image)
     }
     
-    func saveImage(image: UIImage) {
+    func didTapSaveImage(image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
 }
