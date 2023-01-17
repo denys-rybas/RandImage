@@ -8,6 +8,9 @@
 import UIKit
 
 class HomeView: UIView {
+    // Trying split responsibilities between view and controller
+    var controller: HomeViewController!
+    
     // MARK: - View elements
     var backgroundImageView = UIImageView()
     var imageView: UIImageView = {
@@ -71,14 +74,14 @@ class HomeView: UIView {
         )
         nextImageButton.addTarget(
             self,
-            action: #selector(loadNewImage),
+            action: #selector(didTapNextButton),
             for: .touchUpInside
         )
         
         // Add handler for image view
         let tap = UITapGestureRecognizer(
             target: self,
-            action: #selector(openImageToFullScreen)
+            action: #selector(didTapImage)
         )
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -96,30 +99,47 @@ class HomeView: UIView {
             height: 55)
         saveImageButton.addTarget(
             self,
-            action: #selector(saveImage),
+            action: #selector(didTapSaveImage),
             for: .touchUpInside
         )
-        
-        setRandomPhoto()
-
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    // MARK: - Handlers
-    @objc func loadNewImage() {
-        // Start loader on button
-        nextImageButton.configuration?.showsActivityIndicator = true
-        nextImageButton.isEnabled = false
+    func setStateOfNextImageButton(imageLoaded: Bool) {
+        isImageLoaded = imageLoaded
         
-        setRandomPhoto()
+        nextImageButton.configuration?.showsActivityIndicator = !imageLoaded
+        nextImageButton.isEnabled = imageLoaded
     }
     
-    @objc func openImageToFullScreen(_ recognizer: UITapGestureRecognizer) {
+    func setRandomImage(_ image: UIImage) {
+        var viewCenter = self.center
+        viewCenter.y = viewCenter.y - 25
+        self.imageView.center = viewCenter
+        self.imageView.image = image
+    }
+    
+    func setBackgroundImage(_ image: UIImage, blurRadius: Float) {
+        let ciImage = CIImage(image: image)
+        let blurFilter = CIFilter.gaussianBlur()
+        blurFilter.inputImage = ciImage
+        blurFilter.radius = blurRadius
+        var output = blurFilter.outputImage
+        
+        let test = CIFilter.exposureAdjust()
+        test.ev = -4.0
+        test.inputImage = output
+        output = test.outputImage
+                        
+        self.backgroundImageView.image = UIImage(ciImage: output!)
+    }
+    
+    func setFullScreenImage(sender: UITapGestureRecognizer) {
         let fullImageView = UIImageView()
-        let originalView = recognizer.view as! UIImageView
+        let originalView = sender.view as! UIImageView
         
         fullImageView.image = originalView.image
         fullImageView.frame = UIScreen.main.bounds
@@ -134,78 +154,26 @@ class HomeView: UIView {
         fullImageView.addGestureRecognizer(tap)
         fullImageView.isUserInteractionEnabled = true
         
-        self.getNaviagtionController()?.setNavigationBarHidden(true, animated: false)
-        self.addSubview(fullImageView)
+        controller.toggleNavigationBarVisibility(hidden: true)
+        
+        addSubview(fullImageView)
     }
     
     @objc func exitFromFullScreenImage(_ sender: UITapGestureRecognizer) -> Void {
-        self.getNaviagtionController()?.setNavigationBarHidden(false, animated: false)
-        
+        controller.toggleNavigationBarVisibility(hidden: false)
         sender.view?.removeFromSuperview()
     }
     
-    @objc func saveImage() {
-        UIImageWriteToSavedPhotosAlbum(self.imageView.image!, nil, nil, nil)
+    // MARK: - Handlers
+    @objc func didTapImage(sender: UITapGestureRecognizer) {
+        self.controller.processFullScreenImage(sender)
     }
     
-    private func getNaviagtionController() -> UINavigationController? {
-        let uiWindow = UIApplication
-            .shared
-            .connectedScenes
-            .compactMap { ($0 as? UIWindowScene)?.keyWindow}
-            .first
-        
-        return uiWindow?.rootViewController as? UINavigationController
+    @objc func didTapNextButton() {
+        self.controller.loadRandomImage()
     }
     
-    // MARK: - Methods
-    func setRandomPhoto() {
-        let urlString = "https://source.unsplash.com/random/1200x800"
-        let url = URL(string: urlString)!
-        
-        self.isImageLoaded = false
-                
-        let task: URLSessionDataTask = URLSession.shared
-            .dataTask(with: url) { data, response, error in
-                if let data = data {
-                    // UI code should be in the main thread
-                    DispatchQueue.main.async {
-                        // Position
-                        var viewCenter = self.center
-                        viewCenter.y = viewCenter.y - 25
-                        self.imageView.center = viewCenter
-                        // Set image
-                        let image = UIImage(data: data)
-                        self.imageView.image = image
-                        
-                        self.addBlurredBackground(image!, blurRradius: 10.0)
-                        
-                        // Stop loader on button
-                        self.nextImageButton.configuration?.showsActivityIndicator = false
-                        self.nextImageButton.isEnabled = true
-                        
-                        // Image loaded -> can save the image
-                        self.isImageLoaded = true
-                    }
-                } else if let error = error {
-                    print(error)
-                }
-            }
-        task.resume()
-    }
-    
-    private func addBlurredBackground(_ image: UIImage, blurRradius: Float) {
-        let ciImage = CIImage(image: image)
-        let blurFilter = CIFilter.gaussianBlur()
-        blurFilter.inputImage = ciImage
-        blurFilter.radius = blurRradius
-        var output = blurFilter.outputImage
-        
-        let test = CIFilter.exposureAdjust()
-        test.ev = -4.0
-        test.inputImage = output
-        output = test.outputImage
-                        
-        self.backgroundImageView.image = UIImage(ciImage: output!)
+    @objc func didTapSaveImage() {
+        controller.saveImage(image: imageView.image!)
     }
 }
