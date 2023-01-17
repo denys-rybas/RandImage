@@ -13,39 +13,9 @@ class HomeView: UIView {
     
     // MARK: - View elements
     var backgroundImageView = UIImageView()
-    var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        
-        return imageView
-    }()
-    var nextImageButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.showsActivityIndicator = false
-        
-        let button = UIButton(configuration: configuration)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 5
-        button.setTitle("Next photo", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        
-        return button
-    }()
-    var saveImageButton: UIButton = {
-        let button = UIButton()
-        let icon: UIImage = UIImage(systemName: "arrow.down.circle")!
-        button.setImage(icon, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 5
-        return button
-    }()
-    var segmentBottomNavigation: UISegmentedControl = {
-        let items = ["Main", "History"]
-        let control = UISegmentedControl(items: items)
-        control.backgroundColor = .white
-        control.selectedSegmentIndex = 0
-        return control
-    }()
+    var imageView = UIImageView()
+    var nextImageButton: UIButton!
+    var saveImageButton = UIButton()
     // MARK: - Other variables
     var isImageLoaded: Bool = false {
         didSet {
@@ -56,35 +26,29 @@ class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(backgroundImageView)
-        addSubview(imageView)
-        addSubview(nextImageButton)
-        addSubview(saveImageButton)
-        
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.frame = self.frame
-        
         backgroundColor = .systemBackground
         
+        setupBackground()
+        setupImageView()
+        setupNextImageButton()
+        setupSaveButton()
+        
+       pinElementsToLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func pinElementsToLayout() {
+        backgroundImageView.frame = self.frame
         nextImageButton.frame = CGRect(
             x: 30,
             y: self.frame.size.height - 170,
             width: self.frame.size.width - 150,
             height: 55
         )
-        nextImageButton.addTarget(
-            self,
-            action: #selector(didTapNextButton),
-            for: .touchUpInside
-        )
-        
-        // Add handler for image view
-        let tap = UITapGestureRecognizer(
-            target: self,
-            action: #selector(didTapImage)
-        )
-        imageView.addGestureRecognizer(tap)
-        imageView.isUserInteractionEnabled = true
+
         imageView.frame = CGRect(
             x: 0,
             y: 0,
@@ -97,15 +61,58 @@ class HomeView: UIView {
             y: self.frame.size.height - 170,
             width: 55,
             height: 55)
+    }
+    
+    private func setupBackground() {
+        addSubview(backgroundImageView)
+        backgroundImageView.contentMode = .scaleAspectFill
+    }
+    
+    private func setupImageView() {
+        addSubview(imageView)
+        imageView.contentMode = .scaleAspectFill
+        
+        // Add handler for image view
+        let tap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(didTapImage)
+        )
+        
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+    }
+    
+    private func setupNextImageButton() {
+        var configuration = UIButton.Configuration.plain()
+        configuration.showsActivityIndicator = false
+        
+        let nextButton = UIButton(configuration: configuration)
+        nextButton.backgroundColor = .white
+        nextButton.layer.cornerRadius = 5
+        nextButton.setTitle("Next photo", for: .normal)
+        nextButton.setTitleColor(.black, for: .normal)
+        nextButton.addTarget(
+            self,
+            action: #selector(didTapNextButton),
+            for: .touchUpInside
+        )
+        self.nextImageButton = nextButton
+        
+        addSubview(nextImageButton)
+    }
+    
+    private func setupSaveButton() {
+        addSubview(saveImageButton)
+        
+        let icon: UIImage = UIImage(systemName: "arrow.down.circle")!
+        saveImageButton.setImage(icon, for: .normal)
+        saveImageButton.backgroundColor = .white
+        saveImageButton.layer.cornerRadius = 5
         saveImageButton.addTarget(
             self,
             action: #selector(didTapSaveImage),
             for: .touchUpInside
         )
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     func setStateOfNextImageButton(imageLoaded: Bool) {
