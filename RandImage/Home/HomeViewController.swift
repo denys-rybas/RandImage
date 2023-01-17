@@ -9,6 +9,8 @@ import UIKit
 
 class HomeViewController: UIViewController, HomeViewDelegate {
     let homeView: HomeView = HomeView(frame: UIScreen.main.bounds)
+    let service = RandomImageService()
+    var randomImage: RandomImage?
     
     override func loadView() {
         homeView.delegate = self
@@ -41,20 +43,20 @@ class HomeViewController: UIViewController, HomeViewDelegate {
     func didTapNextButton() {
         // Start loader
         homeView.setStateOfNextImageButton(imageLoaded: false)
-
-        let urlString = "https://source.unsplash.com/random/1200x800"
-        let url = URL(string: urlString)!
-                        
-        let task: URLSessionDataTask = URLSession.shared
-            .dataTask(with: url) { [weak self] data, response, error in
+        let task = service
+            .fetchRandomImage() { [weak self] data, response, error in
                 guard let self = self else { return }
                 
                 if let data = data {
                     // UI code should be in the main thread
                     DispatchQueue.main.async {
                         let image = UIImage(data: data)
-                        self.homeView.setRandomImage(image!)
-                        self.homeView.setBackgroundImage(image!, blurRadius: 5.0)
+                        guard let image = image else { return }
+                        
+                        self.randomImage = RandomImage(image: image, date: Date())
+                        
+                        self.homeView.setRandomImage(image)
+                        self.homeView.setBackgroundImage(image, blurRadius: 5.0)
                         // Stop loader on button
                         self.homeView.setStateOfNextImageButton(imageLoaded: true)
                     }

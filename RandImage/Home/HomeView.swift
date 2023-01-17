@@ -16,6 +16,10 @@ protocol HomeViewDelegate: AnyObject {
 }
 
 class HomeView: UIView {
+//    struct Props {
+//        let image: UIImage
+//    }
+    
     // Trying split responsibilities between view and controller
     weak var delegate: HomeViewDelegate?
     

@@ -21,7 +21,7 @@ final class MainTabBarController: UITabBarController {
         let itemsData: [TabBarItemEnum] = [.home, .history]
         
         // Add view controllers
-        self.viewControllers = itemsData.map() {
+        let controllers = itemsData.map() {
             switch $0 {
             case .home:
                 let homeController = HomeViewController()
@@ -32,8 +32,10 @@ final class MainTabBarController: UITabBarController {
             }
         }
         
+        setViewControllers(controllers, animated: false)
+        
         // Modify tab bar item of each view contoller
-        self.viewControllers?.enumerated().forEach() {
+        viewControllers?.enumerated().forEach() {
             $1.tabBarItem.title = itemsData[$0].title
             $1.tabBarItem.image = UIImage(systemName: itemsData[$0].iconName)
             $1.tabBarItem.imageInsets = UIEdgeInsets(

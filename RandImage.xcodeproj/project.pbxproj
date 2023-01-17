@@ -12,6 +12,9 @@
 		F42C2F4C29745CE20061CC92 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42C2F4B29745CE20061CC92 /* MainTabBarController.swift */; };
 		F42C2F4F297467A50061CC92 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42C2F4E297467A40061CC92 /* HomeNavigationController.swift */; };
 		F42C2F51297469CD0061CC92 /* HistoryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42C2F50297469CC0061CC92 /* HistoryNavigationController.swift */; };
+		F4A4004E297718DB00961A4E /* RandomImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4004D297718DB00961A4E /* RandomImage.swift */; };
+		F4A4005129771D1900961A4E /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4005029771D1900961A4E /* ImageAPI.swift */; };
+		F4A4005429772BE200961A4E /* IRandommageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4005329772BE200961A4E /* IRandommageService.swift */; };
 		F4C38AF2296F473100DF89FC /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C38AF1296F473100DF89FC /* HistoryViewController.swift */; };
 		F4E75C6D296D515C00B33DA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E75C6C296D515C00B33DA5 /* AppDelegate.swift */; };
 		F4E75C6F296D515C00B33DA5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E75C6E296D515C00B33DA5 /* SceneDelegate.swift */; };
@@ -26,6 +29,9 @@
 		F42C2F4B29745CE20061CC92 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F42C2F4E297467A40061CC92 /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		F42C2F50297469CC0061CC92 /* HistoryNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryNavigationController.swift; sourceTree = "<group>"; };
+		F4A4004D297718DB00961A4E /* RandomImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImage.swift; sourceTree = "<group>"; };
+		F4A4005029771D1900961A4E /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
+		F4A4005329772BE200961A4E /* IRandommageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRandommageService.swift; sourceTree = "<group>"; };
 		F4C38AF1296F473100DF89FC /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		F4E75C69296D515C00B33DA5 /* RandImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4E75C6C296D515C00B33DA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +90,30 @@
 			path = NavigationControllers;
 			sourceTree = "<group>";
 		};
+		F4A4004C297718C700961A4E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F4A4004D297718DB00961A4E /* RandomImage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F4A4004F29771CDF00961A4E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				F4A4005029771D1900961A4E /* ImageAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		F4A4005229772BBA00961A4E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F4A4005329772BE200961A4E /* IRandommageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		F4E75C60296D515B00B33DA5 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +133,9 @@
 		F4E75C6B296D515C00B33DA5 /* RandImage */ = {
 			isa = PBXGroup;
 			children = (
+				F4A4005229772BBA00961A4E /* Services */,
+				F4A4004F29771CDF00961A4E /* API */,
+				F4A4004C297718C700961A4E /* Models */,
 				F42592312974E9400024DBEA /* App */,
 				F425922C2974E79A0024DBEA /* History */,
 				F425922B2974E78E0024DBEA /* Home */,
@@ -184,9 +217,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A4005429772BE200961A4E /* IRandommageService.swift in Sources */,
 				F4E75C71296D515C00B33DA5 /* HomeViewController.swift in Sources */,
 				F42C2F51297469CD0061CC92 /* HistoryNavigationController.swift in Sources */,
 				F4E75C6D296D515C00B33DA5 /* AppDelegate.swift in Sources */,
+				F4A4004E297718DB00961A4E /* RandomImage.swift in Sources */,
+				F4A4005129771D1900961A4E /* ImageAPI.swift in Sources */,
 				F42C2F4C29745CE20061CC92 /* MainTabBarController.swift in Sources */,
 				F4E75C6F296D515C00B33DA5 /* SceneDelegate.swift in Sources */,
 				F425922E2974E8EA0024DBEA /* HomeView.swift in Sources */,
