@@ -38,7 +38,7 @@ class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .systemBrown
         
         setupBackground()
         setupImageView()
@@ -53,35 +53,41 @@ class HomeView: UIView {
     }
     
     private func setupLayout() {
-        backgroundImageView.frame = self.frame
-        nextImageButton.frame = CGRect(
-            x: 30,
-            y: self.frame.size.height - 170,
-            width: self.frame.size.width - 150,
-            height: 55
-        )
-
-        imageView.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: self.frame.width,
-            height: 500
-        )
-        
-        saveImageButton.frame = CGRect(
-            x: nextImageButton.frame.width + 60,
-            y: self.frame.size.height - 170,
-            width: 55,
-            height: 55)
+        NSLayoutConstraint.activate([
+            // make bg full screen
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            imageView.widthAnchor.constraint(equalTo: widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
+            // center image view
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            nextImageButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7),
+            nextImageButton.heightAnchor.constraint(equalToConstant: 50),
+            nextImageButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 40),
+            nextImageButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            
+            saveImageButton.widthAnchor.constraint(equalTo: nextImageButton.widthAnchor, multiplier: 0.25),
+            saveImageButton.heightAnchor.constraint(equalTo: nextImageButton.heightAnchor),
+            saveImageButton.topAnchor.constraint(equalTo: nextImageButton.topAnchor),
+            saveImageButton.leadingAnchor.constraint(equalTo: nextImageButton.trailingAnchor, constant: 10),
+            saveImageButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+        ])
     }
     
     private func setupBackground() {
         addSubview(backgroundImageView)
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
     private func setupImageView() {
         addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         
         // Add handler for image view
@@ -99,6 +105,7 @@ class HomeView: UIView {
         configuration.showsActivityIndicator = false
         
         let nextButton = UIButton(configuration: configuration)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.backgroundColor = .white
         nextButton.layer.cornerRadius = 5
         nextButton.setTitle("Next photo", for: .normal)
@@ -115,9 +122,11 @@ class HomeView: UIView {
     
     private func setupSaveButton() {
         addSubview(saveImageButton)
+        saveImageButton.translatesAutoresizingMaskIntoConstraints = false
         
         let icon: UIImage = UIImage(systemName: "arrow.down.circle")!
         saveImageButton.setImage(icon, for: .normal)
+        
         saveImageButton.backgroundColor = .white
         saveImageButton.layer.cornerRadius = 5
         saveImageButton.addTarget(
@@ -135,9 +144,6 @@ class HomeView: UIView {
     }
     
     func setRandomImage(_ image: UIImage) {
-        var viewCenter = self.center
-        viewCenter.y = viewCenter.y - 25
-        self.imageView.center = viewCenter
         self.imageView.image = image
     }
     
@@ -159,8 +165,8 @@ class HomeView: UIView {
     func showFullScreenImage(_ image: UIImage) {
         let fullImageView = UIImageView()
         
+        fullImageView.translatesAutoresizingMaskIntoConstraints = false
         fullImageView.image = image
-        fullImageView.frame = UIScreen.main.bounds
         fullImageView.backgroundColor = .black
         fullImageView.contentMode = .scaleAspectFit
         
@@ -175,6 +181,17 @@ class HomeView: UIView {
         delegate?.didUpdateFullScreenImageState(isHidden: true)
         
         addSubview(fullImageView)
+        
+        activeteFullScreenImageConstraints(fullImageView)
+    }
+    
+    private func activeteFullScreenImageConstraints(_ view: UIImageView) {
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: topAnchor),
+            view.leadingAnchor.constraint(equalTo: leadingAnchor),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
     }
     
     @objc func exitFromFullScreenImage(_ sender: UITapGestureRecognizer) -> Void {

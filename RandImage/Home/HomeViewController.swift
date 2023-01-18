@@ -8,23 +8,34 @@
 import UIKit
 
 class HomeViewController: UIViewController, HomeViewDelegate {
-    let homeView: HomeView = HomeView(frame: UIScreen.main.bounds)
+    let homeView: HomeView = HomeView()
     let service = RandomImageService()
     var randomImage: RandomImage?
     
-    override func loadView() {
-        homeView.delegate = self
-        self.view = homeView
-    }
+//    override func loadView() {
+//        homeView.delegate = self
+//        self.view = homeView
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Random Photo"
         
+        // required option to use auto-layout
+        homeView.translatesAutoresizingMaskIntoConstraints = false
+        homeView.delegate = self
+        view.addSubview(homeView)
+        
+        NSLayoutConstraint.activate([
+            homeView.topAnchor.constraint(equalTo: view.topAnchor),
+            homeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            homeView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            homeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        
         didTapNextButton()
         
-        // TODO: - check autolayout
         // TODO: - check UIStackView
         // TODO: - Codable
         // TODO: - UserDefaults.standard.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
