@@ -7,6 +7,20 @@
 
 import UIKit
 
-class HistoryView: UIView {
+protocol HistoryViewDelegate: AnyObject {
     
+}
+
+class HistoryView: UIView {
+    weak var delegate: HistoryViewDelegate?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .systemBrown
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 }

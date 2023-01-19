@@ -7,13 +7,24 @@
 
 import UIKit
 
-class HistoryViewController: UIViewController {
+class HistoryViewController: UIViewController, HistoryViewDelegate {
+    
+    let historyView = HistoryView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My History"
-        view.backgroundColor = .systemBrown
-    
+
+        historyView.translatesAutoresizingMaskIntoConstraints = false
+        historyView.delegate = self
+        view.addSubview(historyView)
+        
+        NSLayoutConstraint.activate([
+            historyView.topAnchor.constraint(equalTo: view.topAnchor),
+            historyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            historyView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            historyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
     }
 }
