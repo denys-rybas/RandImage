@@ -74,7 +74,6 @@ class HomeView: UIView {
             saveImageButton.widthAnchor.constraint(equalTo: nextImageButton.widthAnchor, multiplier: 0.25),
             saveImageButton.heightAnchor.constraint(equalTo: nextImageButton.heightAnchor),
             saveImageButton.topAnchor.constraint(equalTo: nextImageButton.topAnchor),
-            saveImageButton.leadingAnchor.constraint(equalTo: nextImageButton.trailingAnchor, constant: 10),
             saveImageButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
         ])
     }
