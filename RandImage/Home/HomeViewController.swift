@@ -64,12 +64,15 @@ class HomeViewController: UIViewController, HomeViewDelegate {
                         let image = UIImage(data: data)
                         guard let image = image else { return }
                         
-                        self.randomImage = RandomImage(image: image, date: Date())
+                        let randomImage = RandomImage(date: Date(), imageData: data)
+                        self.randomImage = randomImage
                         
                         self.homeView.setRandomImage(image)
                         self.homeView.setBackgroundImage(image, blurRadius: 5.0)
                         // Stop loader on button
                         self.homeView.setStateOfNextImageButton(imageLoaded: true)
+                        
+                        self.service.saveToDefaults(randomImage)
                     }
                 } else if let error = error {
                     print(error)

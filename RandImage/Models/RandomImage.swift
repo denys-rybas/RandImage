@@ -7,7 +7,12 @@
 
 import UIKit
 
-struct RandomImage {
-    let image: UIImage
+struct RandomImage: Codable {
     let date: Date
+    let imageData: Data
+    
+    var image: UIImage? {
+        return UIImage(data: self.imageData)
+    }
+    
 }

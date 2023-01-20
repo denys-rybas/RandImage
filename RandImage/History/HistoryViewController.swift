@@ -10,6 +10,7 @@ import UIKit
 class HistoryViewController: UIViewController, HistoryViewDelegate {
     
     let historyView = HistoryView()
+    let service = RandomImageService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,5 +27,11 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
             historyView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             historyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // TODO: - Make collection view with last 6 images
     }
 }
