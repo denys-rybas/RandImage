@@ -35,3 +35,17 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
         // TODO: - Make collection view with last 6 images
     }
 }
+
+extension HistoryViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell(frame: .zero)
+    }
+}
+
+extension HistoryViewController: UICollectionViewDelegate {
+    
+}
