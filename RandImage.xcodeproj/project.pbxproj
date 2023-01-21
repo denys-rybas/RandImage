@@ -10,6 +10,7 @@
 		F425922E2974E8EA0024DBEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425922D2974E8EA0024DBEA /* HomeView.swift */; };
 		F42592302974E8FE0024DBEA /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425922F2974E8FE0024DBEA /* HistoryView.swift */; };
 		F42C2F4C29745CE20061CC92 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42C2F4B29745CE20061CC92 /* MainTabBarController.swift */; };
+		F48A62EC297C7A4E006A1041 /* HistoryImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A62EB297C7A4E006A1041 /* HistoryImageCell.swift */; };
 		F4A4004E297718DB00961A4E /* RandomImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4004D297718DB00961A4E /* RandomImage.swift */; };
 		F4A4005129771D1900961A4E /* ImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4005029771D1900961A4E /* ImageAPI.swift */; };
 		F4A4005429772BE200961A4E /* RandomImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4005329772BE200961A4E /* RandomImageService.swift */; };
@@ -25,6 +26,7 @@
 		F425922D2974E8EA0024DBEA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F425922F2974E8FE0024DBEA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		F42C2F4B29745CE20061CC92 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		F48A62EB297C7A4E006A1041 /* HistoryImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryImageCell.swift; sourceTree = "<group>"; };
 		F4A4004D297718DB00961A4E /* RandomImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImage.swift; sourceTree = "<group>"; };
 		F4A4005029771D1900961A4E /* ImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPI.swift; sourceTree = "<group>"; };
 		F4A4005329772BE200961A4E /* RandomImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageService.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				F4C38AF1296F473100DF89FC /* HistoryViewController.swift */,
 				F425922F2974E8FE0024DBEA /* HistoryView.swift */,
+				F48A62EB297C7A4E006A1041 /* HistoryImageCell.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			files = (
 				F4A4005429772BE200961A4E /* RandomImageService.swift in Sources */,
 				F4E75C71296D515C00B33DA5 /* HomeViewController.swift in Sources */,
+				F48A62EC297C7A4E006A1041 /* HistoryImageCell.swift in Sources */,
 				F4E75C6D296D515C00B33DA5 /* AppDelegate.swift in Sources */,
 				F4A4004E297718DB00961A4E /* RandomImage.swift in Sources */,
 				F4A4005129771D1900961A4E /* ImageAPI.swift in Sources */,

@@ -21,6 +21,9 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
         historyView.delegate = self
         view.addSubview(historyView)
         
+        historyView.collectionView.register(HistoryImageCell.self, forCellWithReuseIdentifier: HistoryImageCell.identifier)
+        historyView.collectionView.dataSource = self
+        
         NSLayoutConstraint.activate([
             historyView.topAnchor.constraint(equalTo: view.topAnchor),
             historyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -38,11 +41,16 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
 
 extension HistoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        // TODO: - count of items from user defaults
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell(frame: .zero)
+        let cell = historyView.collectionView.dequeueReusableCell(
+            withReuseIdentifier: HistoryImageCell.identifier, for: indexPath
+        )
+        
+        return cell
     }
 }
 
