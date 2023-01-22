@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreImage.CIFilterBuiltins
 
 protocol HomeViewDelegate: AnyObject {
     func didUpdateFullScreenImageState(isHidden: Bool)
@@ -25,6 +24,7 @@ class HomeView: UIView {
     
     // MARK: - View elements
     var backgroundImageView = UIImageView()
+    var backgroundBlurEffectView = UIVisualEffectView()
     var imageView = UIImageView()
     var nextImageButton: UIButton!
     var saveImageButton = UIButton()
@@ -60,6 +60,11 @@ class HomeView: UIView {
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
+            backgroundBlurEffectView.topAnchor.constraint(equalTo: backgroundImageView.topAnchor),
+            backgroundBlurEffectView.leadingAnchor.constraint(equalTo: backgroundImageView.leadingAnchor),
+            backgroundBlurEffectView.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
+            backgroundBlurEffectView.trailingAnchor.constraint(equalTo: backgroundImageView.trailingAnchor),
+            
             imageView.widthAnchor.constraint(equalTo: widthAnchor),
             imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
             // center image view
@@ -80,8 +85,13 @@ class HomeView: UIView {
     
     private func setupBackground() {
         addSubview(backgroundImageView)
+        addSubview(backgroundBlurEffectView)
+        
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundBlurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        
         backgroundImageView.contentMode = .scaleAspectFill
+        backgroundBlurEffectView.contentMode = .scaleAspectFill
     }
     
     private func setupImageView() {
@@ -147,18 +157,10 @@ class HomeView: UIView {
     }
     
     func setBackgroundImage(_ image: UIImage, blurRadius: Float) {
-        let ciImage = CIImage(image: image)
-        let blurFilter = CIFilter.gaussianBlur()
-        blurFilter.inputImage = ciImage
-        blurFilter.radius = blurRadius
-        var output = blurFilter.outputImage
-        
-        let test = CIFilter.exposureAdjust()
-        test.ev = -4.0
-        test.inputImage = output
-        output = test.outputImage
+        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
+        self.backgroundBlurEffectView.effect = blurEffect
                         
-        self.backgroundImageView.image = UIImage(ciImage: output!)
+        self.backgroundImageView.image = image
     }
     
     func showFullScreenImage(_ image: UIImage) {
