@@ -39,9 +39,10 @@ class RandomImageService {
             return [RandomImage]()
         }
         
-        return dataArray.map() { (item: Data) in
-            return try! PropertyListDecoder().decode(RandomImage.self, from: item)
+        let mapped = dataArray.compactMap() { (item: Data) in
+            return try? PropertyListDecoder().decode(RandomImage.self, from: item)
         }
+        return mapped.sorted(by: {$0.date.compare($1.date) == .orderedDescending})
     }
     
     private func removedExtraImages(_ images: inout [Data], maxCount: Int) -> [Data] {
