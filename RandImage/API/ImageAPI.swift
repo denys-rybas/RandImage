@@ -9,7 +9,7 @@ import UIKit
 
 class ImageAPI {
     enum Endpoints: String {
-        case randomImage = "/random/1200x800"
+        case randomImage = "/random/1920x1080"
         
         func getHost() -> String {
             return "https://source.unsplash.com"

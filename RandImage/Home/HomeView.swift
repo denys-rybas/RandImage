@@ -45,14 +45,20 @@ class HomeView: UIView {
         setupNextImageButton()
         setupSaveButton()
         
-        setupLayout()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    private func setupLayout() {
+    private func setupConstraints() {
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundBlurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        nextImageButton.translatesAutoresizingMaskIntoConstraints = false
+        saveImageButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             // make bg full screen
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -87,16 +93,12 @@ class HomeView: UIView {
         addSubview(backgroundImageView)
         addSubview(backgroundBlurEffectView)
         
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBlurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundBlurEffectView.contentMode = .scaleAspectFill
     }
     
     private func setupImageView() {
         addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         
         // Add handler for image view
@@ -131,7 +133,6 @@ class HomeView: UIView {
     
     private func setupSaveButton() {
         addSubview(saveImageButton)
-        saveImageButton.translatesAutoresizingMaskIntoConstraints = false
         
         let icon: UIImage = UIImage(systemName: "arrow.down.circle")!
         saveImageButton.setImage(icon, for: .normal)
