@@ -11,12 +11,13 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
     
     let historyView = HistoryView()
     let service = RandomImageService()
+    var randomImages: [RandomImage]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My History"
-
+        
         historyView.translatesAutoresizingMaskIntoConstraints = false
         historyView.delegate = self
         view.addSubview(historyView)
@@ -35,20 +36,24 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: - Make collection view with last 6 images
+        randomImages = service.fetchFromDefaults()
+        historyView.collectionView.reloadData()
     }
 }
 
 extension HistoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // TODO: - count of items from user defaults
-        return 4
+        return randomImages?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = historyView.collectionView.dequeueReusableCell(
+        guard let cell = historyView.collectionView.dequeueReusableCell(
             withReuseIdentifier: HistoryImageCell.identifier, for: indexPath
-        )
+        ) as? HistoryImageCell else { return HistoryImageCell() }
+        
+        let model = randomImages?[indexPath.row]
+        cell.model = model
         
         return cell
     }

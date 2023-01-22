@@ -9,6 +9,7 @@ import UIKit
 
 class HistoryImageCell: UICollectionViewCell {
     static let identifier = "HistoryImageCell"
+    var model: RandomImage?
     
     private let imageView: UIImageView = {
        let imagageView = UIImageView()
@@ -21,9 +22,7 @@ class HistoryImageCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(imageView)
-        
-        imageView.image = UIImage(named: "house_image")
-        
+                
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -31,6 +30,10 @@ class HistoryImageCell: UICollectionViewCell {
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
+    }
+    
+    override func layoutSubviews() {
+        imageView.image = model?.image
     }
     
     required init?(coder: NSCoder) {
