@@ -46,21 +46,19 @@ class HistoryView: UIView {
     
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0 / 2.0),
-            heightDimension: .fractionalHeight(1.0))
+            widthDimension: .fractionalWidth(1/2),
+            heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let spacing: CGFloat = 2.5
         item.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(0.5))
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            repeatingSubitem: item,
-            count: 2
-        )
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(1/1.5))
+        
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         
