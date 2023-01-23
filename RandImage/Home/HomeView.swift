@@ -186,6 +186,14 @@ class HomeView: UIView {
         activeteFullScreenImageConstraints(fullImageView)
     }
     
+    func updateStateOfSaveButton(wasSaved: Bool) {
+        saveImageButton.isEnabled = !wasSaved
+        
+        let systemName = wasSaved ? "checkmark.circle" : "arrow.down.circle"
+        let icon: UIImage = UIImage(systemName: systemName)!
+        saveImageButton.setImage(icon, for: .normal)
+    }
+    
     private func activeteFullScreenImageConstraints(_ view: UIImageView) {
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor),

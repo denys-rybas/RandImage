@@ -10,12 +10,8 @@ import UIKit
 
 extension UIDevice {
     func playHaptic(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        // AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(type)
-    }
-    
-    func saveToPhotoAlbum(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
 }

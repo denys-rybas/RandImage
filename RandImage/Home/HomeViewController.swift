@@ -51,6 +51,7 @@ class HomeViewController: UIViewController, HomeViewDelegate {
     func didTapNextButton() {
         // Start loader
         homeView.setStateOfNextImageButton(imageLoaded: false)
+        homeView.updateStateOfSaveButton(wasSaved: false)
         let task = service
             .fetchRandomImage() { [weak self] data, response, error in
                 guard let self = self else { return }
@@ -83,7 +84,21 @@ class HomeViewController: UIViewController, HomeViewDelegate {
     }
     
     func didTapSaveImage(image: UIImage) {
-        UIDevice().saveToPhotoAlbum(image: image)
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(imageSavingHandler), nil)
+    }
+    
+    @objc func imageSavingHandler(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            homeView.updateStateOfSaveButton(wasSaved: false)
+            UIDevice().playHaptic(.error)
+            
+            let alertController = UIAlertController(title: "Error on save", message: error.localizedDescription, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .default))
+            
+            return
+        }
+        
+        homeView.updateStateOfSaveButton(wasSaved: true)
         UIDevice().playHaptic(.success)
     }
 }
