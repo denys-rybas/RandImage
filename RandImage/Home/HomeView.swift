@@ -26,7 +26,7 @@ class HomeView: UIView {
     var backgroundImageView = UIImageView()
     var backgroundBlurEffectView = UIVisualEffectView()
     var imageView = UIImageView()
-    var nextImageButton: UIButton!
+    var nextImageButton = UIButton()
     var saveImageButton = UIButton()
     // MARK: - Other variables
     var isImageLoaded: Bool = false {
@@ -112,23 +112,22 @@ class HomeView: UIView {
     }
     
     private func setupNextImageButton() {
+        addSubview(nextImageButton)
+
         var configuration = UIButton.Configuration.plain()
         configuration.showsActivityIndicator = false
         
-        let nextButton = UIButton(configuration: configuration)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.backgroundColor = .white
-        nextButton.layer.cornerRadius = 5
-        nextButton.setTitle("Next photo", for: .normal)
-        nextButton.setTitleColor(.black, for: .normal)
-        nextButton.addTarget(
+        nextImageButton.configuration = configuration
+        nextImageButton.translatesAutoresizingMaskIntoConstraints = false
+        nextImageButton.backgroundColor = .white
+        nextImageButton.layer.cornerRadius = 5
+        nextImageButton.setTitle("Next photo", for: .normal)
+        nextImageButton.setTitleColor(.black, for: .normal)
+        nextImageButton.addTarget(
             self,
             action: #selector(didTapNextButton),
             for: .touchUpInside
         )
-        self.nextImageButton = nextButton
-        
-        addSubview(nextImageButton)
     }
     
     private func setupSaveButton() {

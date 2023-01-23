@@ -15,15 +15,18 @@ class ImageAPI {
             return "https://source.unsplash.com"
         }
         
-        func url() -> URL {
-            return URL(string: getHost() + self.rawValue)!
+        func url() -> URL? {
+            return URL(string: getHost() + self.rawValue)
         }
     }
     
     func getRandomImageTask(
         completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
-    ) -> URLSessionDataTask {
-        return URLSession.shared
-            .dataTask(with: Endpoints.randomImage.url(), completionHandler: completionHandler)
+    ) -> URLSessionDataTask? {
+        guard let url = Endpoints.randomImage.url() else { return nil }
+        
+        return URLSession
+            .shared
+            .dataTask(with: url, completionHandler: completionHandler)
     }
 }

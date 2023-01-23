@@ -37,9 +37,6 @@ class HomeViewController: UIViewController, HomeViewDelegate {
         didTapNextButton()
         
         // TODO: - check UIStackView
-        // TODO: - Codable
-        // TODO: - UserDefaults.standard.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
-        // in debug mode we can use "po" (print object) in console
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +75,7 @@ class HomeViewController: UIViewController, HomeViewDelegate {
                     print(error)
                 }
             }
-        task.resume()
+        task?.resume()
     }
     
     func didTapImage(image: UIImage) {

@@ -14,7 +14,7 @@ class RandomImageService {
     
     func fetchRandomImage(
         handler: @escaping (Data?, URLResponse?, Error?) -> Void
-    ) -> URLSessionDataTask {
+    ) -> URLSessionDataTask? {
         return ImageAPI()
             .getRandomImageTask(completionHandler: handler)
     }

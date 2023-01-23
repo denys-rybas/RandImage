@@ -43,7 +43,6 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
 
 extension HistoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // TODO: - count of items from user defaults
         return randomImages?.count ?? 0
     }
     
