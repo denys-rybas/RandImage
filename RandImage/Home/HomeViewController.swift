@@ -63,6 +63,7 @@ class HomeViewController: UIViewController, HomeViewDelegate {
         let model = service.getModelByIndex(index)
         if let model = model {
             homeView.setImageFromHistory(model: model)
+            homeView.updateStateOfSaveButton(wasSaved: false)
         }
     }
     
