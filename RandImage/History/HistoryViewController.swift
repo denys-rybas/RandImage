@@ -39,6 +39,20 @@ class HistoryViewController: UIViewController, HistoryViewDelegate {
         randomImages = service.fetchFromDefaults()
         historyView.collectionView.reloadData()
     }
+    
+    @objc func didTapOnCell(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: historyView.collectionView)
+        let indexPath = historyView.collectionView.indexPathForItem(at: location)
+        
+        guard let indexPath = indexPath else { return }
+        
+        
+        // Open home screen
+        tabBarController?.selectedIndex = TabBarItemEnum.home.rawValue
+        // Create event. Listen it in HomeController to load selected image
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name.tappedHistoryImage, object: nil, userInfo: ["modelIndex": indexPath.row])
+    }
 }
 
 extension HistoryViewController: UICollectionViewDataSource {
@@ -54,10 +68,20 @@ extension HistoryViewController: UICollectionViewDataSource {
         let model = randomImages?[indexPath.row]
         cell.model = model
         
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnCell)))
+        
         return cell
     }
 }
 
 extension HistoryViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //
+    }
+}
+
+extension Notification.Name {
+    static var tappedHistoryImage: Self {
+        return .init("DidTapHistoryImage")
+    }
 }

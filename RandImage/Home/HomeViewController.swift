@@ -17,6 +17,11 @@ class HomeViewController: UIViewController, HomeViewDelegate {
 //        self.view = homeView
 //    }
     
+    deinit {
+        NotificationCenter.default
+            .removeObserver(self, name: NSNotification.Name.tappedHistoryImage, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,9 +44,26 @@ class HomeViewController: UIViewController, HomeViewDelegate {
         // TODO: - check UIStackView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(didTapHistoryImage), name: NSNotification.Name.tappedHistoryImage, object: nil)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // view.safeAreaInsets are not available in viewDidLoad
+    }
+    
+    @objc private func didTapHistoryImage(_ notification: Notification) {
+        let userInfo = notification.userInfo as? Dictionary<String, Int>
+        guard let index = userInfo?["modelIndex"] else { return }
+        
+        let model = service.getModelByIndex(index)
+        if let model = model {
+            homeView.setImageFromHistory(model: model)
+        }
     }
     
     func didUpdateFullScreenImageState(isHidden: Bool) {

@@ -45,6 +45,12 @@ class RandomImageService {
         return mapped.sorted(by: {$0.date.compare($1.date) == .orderedDescending})
     }
     
+    func getModelByIndex(_ index: Int) -> RandomImage? {
+        let images = fetchFromDefaults()
+        
+        return images[index]
+    }
+    
     private func removedExtraImages(_ images: inout [Data], maxCount: Int) -> [Data] {
         let count: Int = images.count
         if count < maxCount {

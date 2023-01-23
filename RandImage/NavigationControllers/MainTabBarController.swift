@@ -49,7 +49,7 @@ final class MainTabBarController: UITabBarController {
     
 }
 
-private enum TabBarItemEnum: Int {
+enum TabBarItemEnum: Int {
     case home
     case history
     

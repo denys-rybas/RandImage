@@ -186,6 +186,10 @@ class HomeView: UIView {
         activeteFullScreenImageConstraints(fullImageView)
     }
     
+    func setImageFromHistory(model: RandomImage) {
+        imageView.image = model.image
+    }
+    
     func updateStateOfSaveButton(wasSaved: Bool) {
         saveImageButton.isEnabled = !wasSaved
         
