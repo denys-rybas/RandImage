@@ -83,6 +83,7 @@ class HomeViewController: UIViewController, HomeViewDelegate {
     }
     
     func didTapSaveImage(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        UIDevice().saveToPhotoAlbum(image: image)
+        UIDevice().playHaptic(.success)
     }
 }
