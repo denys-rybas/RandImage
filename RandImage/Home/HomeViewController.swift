@@ -74,7 +74,6 @@ class HomeViewController: UIViewController, HomeViewDelegate {
     func didTapNextButton() {
         // Start loader
         homeView.setStateOfNextImageButton(imageLoaded: false)
-        homeView.updateStateOfSaveButton(wasSaved: false)
         let task = service
             .fetchRandomImage() { [weak self] data, response, error in
                 guard let self = self else { return }
@@ -90,7 +89,7 @@ class HomeViewController: UIViewController, HomeViewDelegate {
                         
                         self.homeView.setRandomImage(image)
                         self.homeView.setBackgroundImage(image, blurRadius: 5.0)
-                        // Stop loader on button
+                        
                         self.homeView.setStateOfNextImageButton(imageLoaded: true)
                         
                         self.service.saveToDefaults(randomImage)
